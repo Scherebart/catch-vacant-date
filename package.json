@@ -1,0 +1,24 @@
+{
+  "name": "query-vacant-optometrist-dates",
+  "scripts": {
+    "dev": "nodemon --signal SIGTERM --ext js --exec \"bash\" start.sh" ,
+    "test": "NODE_ENV=test jest --verbose --colors 2>&1"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "public/**"
+    ]
+  },
+  "dependencies": {
+    "async-mutex": "^0.4.0",
+    "body-parser": "^1.20.2",
+    "connect-livereload": "^0.6.1",
+    "express": "^4.18.2",
+    "livereload": "^0.9.3",
+    "web-push": "^3.5.0"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "nodemon": "^2.0.21"
+  }
+}

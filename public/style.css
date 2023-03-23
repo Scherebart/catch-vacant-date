@@ -1,0 +1,40 @@
+button {
+  border-radius: 4px;
+  border: 1px solid darkgray;
+  padding: 8px;
+}
+
+#permission-btn, #success-message, #error-message {
+  display: none;
+}
+
+#success-message {
+  color: black;
+}
+
+#error-message {
+  color: red;
+  font-weight: bold;
+}
+
+#vacancies {
+  margin-top: 20px;
+  border: 5px dashed darkgreen;
+  border-radius: 8px;
+}
+
+#vacancies #check-date {
+  border-bottom: 5px dashed darkgreen;
+  padding: 10px;
+  font-size: 23px;
+  font-style: italic;
+  text-align: center;
+}
+
+#vacancies .vacancy {
+  text-align: center;
+  margin: 16px 0px;
+  font-weight: bolder;
+  font-size: 18px;
+  letter-spacing: 0.2em;
+}

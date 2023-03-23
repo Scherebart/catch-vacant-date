@@ -1,7 +1,5 @@
-output
-current_source.html
-current_parsed_facilities
-current_parsed_status_dates
-current_parsed_vacant_dates
-current_parsed
-previous_parsed
+node_modules
+updates
+*.pid
+vapid-keys
+cookies
