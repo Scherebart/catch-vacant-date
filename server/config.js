@@ -1,9 +1,8 @@
 const path = require("path");
 
-const STATE_DIR = path.join(__dirname, "state");
-const TEMP_DIR = path.join(__dirname, "..","temp");
-const WEB_DIR = path.join(__dirname, "..","web");
-
+const STATE_DIR = path.join(__dirname, "..", "state");
+const TEMP_DIR = path.join(__dirname, "..", "temp");
+const WEB_DIR = path.join(__dirname, "..", "web");
 
 module.exports = {
   pushServiceSubscriptionsFile: path.join(

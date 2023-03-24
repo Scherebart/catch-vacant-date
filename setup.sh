@@ -3,6 +3,6 @@
 PROJECT_ROOT="$(dirname "$0")"
 
 mkdir -p "${PROJECT_ROOT}/temp/updates"
-mkdir -p "${PROJECT_ROOT}/server/state"
+mkdir -p "${PROJECT_ROOT}/state"
 
-./node_modules/.bin/web-push generate-vapid-keys --json > "${PROJECT_ROOT}/server/state/vapid-keys.json"
+./node_modules/.bin/web-push generate-vapid-keys --json > "${PROJECT_ROOT}/state/vapid-keys.json"
