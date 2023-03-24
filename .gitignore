@@ -1,5 +1,3 @@
 node_modules
-updates
-*.pid
-vapid-keys
-cookies
+server/state
+temp

@@ -18,8 +18,7 @@ const urlB64ToUint8Array = (base64String) => {
 };
 
 const saveSubscription = async (subscription) => {
-  const SERVER_URL = "http://localhost:8080/save-subscription";
-  const response = await fetch(SERVER_URL, {
+  const response = await fetch("/save-subscription", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
@@ -31,9 +30,8 @@ const saveSubscription = async (subscription) => {
 };
 
 const subscribeForNotifications = async () => {
-  const applicationServerKey = urlB64ToUint8Array(
-    "BMtAKbIwjS9gkceHqs3IWCW9s4UvaG3GB1n3Y2ab-khlsNbJ4CrTPQFI8bWVCy40YmoAbLc-RsT6gDZgzm6e9Cg"
-  );
+  const res = await fetch("/vapid-key");
+  const { publicKey: applicationServerKey } = await res.json();
   console.log({ applicationServerKey });
   const options = { applicationServerKey, userVisibleOnly: true };
   const subscription = await self.registration.pushManager.subscribe(options);

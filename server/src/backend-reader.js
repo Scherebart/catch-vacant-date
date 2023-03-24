@@ -1,6 +1,8 @@
 const path = require("path");
 const fs = require("fs");
 
+const { updatesDir ,vapidKeysFile} = require("../config");
+
 function findMax(array) {
   if (array.length === 0) {
     return null;
@@ -17,12 +19,12 @@ function findMax(array) {
 }
 
 function getLatestVacancies() {
-  const filenames = fs.readdirSync(path.join(__dirname, "updates"));
+  const filenames = fs.readdirSync(updatesDir);
   const latestFilename = findMax(filenames);
   let latestVacancies = [];
   if (latestFilename) {
     const fileContentsRaw = fs.readFileSync(
-      path.join(__dirname, "updates", latestFilename),
+      path.join(updatesDir, latestFilename),
       {
         encoding: "utf-8",
       }
@@ -37,4 +39,12 @@ function getLatestVacancies() {
   };
 }
 
-module.exports = { getLatestVacancies };
+function getVapidPublicKey() {
+  const { publicKey } = JSON.parse(
+    fs.readFileSync(vapidKeysFile, { encoding: "utf8" })
+  );
+
+  return { publicKey };
+}
+
+module.exports = { getLatestVacancies , getVapidPublicKey};

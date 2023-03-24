@@ -3,21 +3,11 @@ const fs = require("fs");
 const webpush = require("web-push");
 const { Mutex } = require("async-mutex");
 
-const { pushServiceSubscriptionsFile } = require("./config");
+const { pushServiceSubscriptionsFile, vapidKeysFile } = require("../config");
 
-const SUBSCRIPTIONS_FILE_PATH = path.join(
-  __dirname,
-  pushServiceSubscriptionsFile
+const VAPID_KEYS = JSON.parse(
+  fs.readFileSync(vapidKeysFile, { encoding: "utf8" })
 );
-
-const VAPID_KEYS = {
-  publicKey: fs.readFileSync(path.join(__dirname, "vapid-keys", "public"), {
-    encoding: "utf8",
-  }),
-  privateKey: fs.readFileSync(path.join(__dirname, "vapid-keys", "private"), {
-    encoding: "utf8",
-  }),
-};
 webpush.setVapidDetails(
   "mailto:myuserid@email.com",
   VAPID_KEYS.publicKey,
@@ -29,7 +19,7 @@ const mutex = new Mutex();
 async function processSubscriptionsMap(func) {
   await mutex.acquire();
 
-  const subscriptionsMapRaw = fs.readFileSync(SUBSCRIPTIONS_FILE_PATH, {
+  const subscriptionsMapRaw = fs.readFileSync(pushServiceSubscriptionsFile, {
     flag: "a+",
     encoding: "utf8",
   });
@@ -38,7 +28,7 @@ async function processSubscriptionsMap(func) {
     : {};
   const changedSubscriptionMap = await func(subscriptionsMap);
   fs.writeFileSync(
-    SUBSCRIPTIONS_FILE_PATH,
+    pushServiceSubscriptionsFile,
     JSON.stringify(changedSubscriptionMap),
     {
       flag: "w",

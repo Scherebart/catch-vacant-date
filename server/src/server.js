@@ -4,8 +4,9 @@ const bodyParser = require("body-parser");
 const liveReload = require("livereload");
 const connectLiveReload = require("connect-livereload");
 
+const { webDir, vapidKeysFile } = require("../config");
 const { saveSubscription, notifySubscribers } = require("./backend-service");
-const { getLatestVacancies } = require("./backend-reader");
+const { getLatestVacancies, getVapidPublicKey } = require("./backend-reader");
 
 console.log("from the server js");
 
@@ -17,8 +18,9 @@ process.on("SIGUSR2", async () => {
 
 const SERVER_PORT = 8080;
 
+console.log({ webDir });
 const liveReloadServer = liveReload.createServer();
-liveReloadServer.watch(path.join(__dirname, "public"));
+liveReloadServer.watch(webDir);
 liveReloadServer.server.once("connection", () => {
   setTimeout(() => {
     liveReloadServer.refresh("/");
@@ -27,7 +29,7 @@ liveReloadServer.server.once("connection", () => {
 
 const server = express();
 server.use(connectLiveReload());
-server.use(express.static(path.join(__dirname, "public")));
+server.use(express.static(webDir));
 server.use(bodyParser.json());
 
 server.get("/health", (res) => res.type("json").send({ health: "ok" }));
@@ -41,6 +43,10 @@ server.post("/save-subscription", async (req, res) => {
 
 server.get("/latest-vacancies", async (req, res) => {
   return res.type("json").send(getLatestVacancies());
+});
+
+server.get("/vapid-key", async (req, res) => {
+  return res.type("json").send(getVapidPublicKey());
 });
 
 server.listen(SERVER_PORT, () =>

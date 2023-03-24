@@ -2,8 +2,8 @@
 
 set -m
 
-node server.js &
+node server/src/server.js &
 PID=$!
 sleep 2
-echo $PID > node.pid
+echo $PID > temp/node.pid
 fg %1

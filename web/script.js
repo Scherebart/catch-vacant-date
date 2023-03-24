@@ -121,6 +121,14 @@ async function registerOrUnregisterServiceWorker() {
 
 async function main() {
   try {
+    const res = await fetch("/vapid-key");
+    const { publicKey } = res.json();
+    console.log({publicKey})
+
+    document
+      .getElementById("permission-btn")
+      .addEventListener("click", enableNotifications);
+
     checkCaps();
     checkUserPermission();
     await registerOrUnregisterServiceWorker();
@@ -132,7 +140,7 @@ async function main() {
   refreshUI();
 }
 
-export async function enableNotifications() {
+async function enableNotifications() {
   try {
     await requestNotificationPermission();
     await registerOrUnregisterServiceWorker();
@@ -142,8 +150,6 @@ export async function enableNotifications() {
   }
   refreshUI();
 }
-document
-  .getElementById("permission-btn")
-  .addEventListener("click", enableNotifications);
+
 
 main();
